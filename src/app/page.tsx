@@ -1,9 +1,11 @@
 'use client'
 
+export const dynamic = 'force-dynamic'
+
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { supabase } from '@/lib/supabase'
-import { ArrowRight, Github, ExternalLink } from 'lucide-react'
+import { ArrowRight, GitBranch, ExternalLink } from 'lucide-react'
 
 export default function Home() {
   const [projects, setProjects] = useState<any[]>([])
@@ -100,7 +102,7 @@ export default function Home() {
                 )}
                 {project.github_link && (
                   <a href={project.github_link} target="_blank" className="brutal-border hover:bg-white hover:text-black transition-all p-2 px-4 flex items-center gap-2 font-bold">
-                    CODE <Github size={18} />
+                    CODE <GitBranch size={18} />
                   </a>
                 )}
               </div>
