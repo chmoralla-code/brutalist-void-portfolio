@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -8,14 +9,21 @@ import { Textarea } from '@/components/ui/textarea'
 import { supabase } from '@/lib/supabase'
 
 export default function DashboardPage() {
+  const router = useRouter()
   const [projects, setProjects] = useState<any[]>([])
   const [skills, setSkills] = useState<any[]>([])
   const [content, setContent] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // Client-side auth check
+    const session = document.cookie.split('; ').find(row => row.startsWith('admin_session='))
+    if (!session) {
+      router.push('/admin/login')
+      return
+    }
     fetchData()
-  }, [])
+  }, [router])
 
   const fetchData = async () => {
     setLoading(true)
